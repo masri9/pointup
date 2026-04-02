@@ -1,3 +1,4 @@
+import { clear } from "console";
 import "./globals.css";
 
 export default function RootLayout({

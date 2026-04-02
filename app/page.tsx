@@ -1,288 +1,225 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+
+// المصفوفة المحدثة لتشمل الصور والفيديوهات
+const heroMedia = [
+  { src: "/images/hx.jpg", type: "image" },
+  { src: "/videos/promo1.mp4", type: "video" },
+  { src: "/images/nx.jpg", type: "image" },
+  { src: "/images/dx.jpg", type: "image" },
+  { src: "/videos/promo2.mp4", type: "video" },
+  { src: "/images/fx.jpg", type: "image" },
+  { src: "/images/ix.jpg", type: "image" },
+  { src: "/videos/promo3.mp4", type: "video" },
+  { src: "/images/cx.jpg", type: "image" },
+  { src: "/images/mx.jpg", type: "image" },
+  { src: "/images/kx.jpg", type: "image" },
+  { src: "/images/ax.jpg", type: "image" },
+  { src: "/images/bx.jpg", type: "image" },
+  { src: "/images/ex.jpg", type: "image" },
+  { src: "/images/ux.jpg", type: "image" },
+  { src: "/images/lx.jpg", type: "image" },
+  { src: "/images/sx.jpg", type: "image" },
+  { src: "/images/ox.jpg", type: "image" },
+  { src: "/images/gx.jpg", type: "image" },
+  { src: "/images/qx.jpg", type: "image" },
+  { src: "/images/rx.jpg", type: "image" },
+  { src: "/images/tx.jpg", type: "image" },
+  { src: "/images/vx.jpg", type: "image" },
+  { src: "/images/px.jpg", type: "image" },
+  { src: "/images/zx.jpg", type: "image" },
+];
+
+const menuLinks = [
+  { name: "Design", href: "/design" }, 
+  { name: "Automation", href: "#services" },
+  { name: "Support", href: "#contact" }
+];
+
+const columns = Array.from({ length: 7 }, (_, i) =>
+  heroMedia.filter((_, idx) => idx % 7 === i)
+);
+
+const services = [
+  {
+    title: "AI Image Engine",
+    desc: "Experience the power of Nano Banana 2. Generate high-fidelity images directly from your creative prompts.",
+    img: "https://images.unsplash.com/photo-1620712943543-bcc4628c71d0?q=80&w=1600",
+    link: "/design",
+    isAI: true
+  },
+  {
+    title: "Social Media Design",
+    desc: "Eye-catching posts and ads designed to boost engagement and attract your ideal audience.",
+    img: "https://plain-eeur-prod-public.komododecks.com/202603/29/H4OEBpbozA6pW9rBX95x/image.jpg",
+    link: "#services",
+    isAI: false
+  },
+  {
+    title: "Landing Pages",
+    desc: "We design fast, modern landing pages optimized to turn visitors into customers smoothly.",
+    img: "https://plain-eeur-prod-public.komododecks.com/202603/29/vu4l2vY9TUs5UNyrXhH4/image.png",
+    link: "#services",
+    isAI: false
+  }
+];
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [compareValue, setCompareValue] = useState(50);
   const [showTiles, setShowTiles] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTiles(true);
-    }, 700);
-
+    const timer = setTimeout(() => setShowTiles(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <>
       <header className="topbar">
         <div className="left-side">
-          <img
-            className="logo"
-            src="https://plain-eeur-prod-public.komododecks.com/202603/29/3WkRxPzB59b5sd9X6Ww4/image.png"
-            alt="PointUp Logo"
+          <Image 
+            src="https://plain-eeur-prod-public.komododecks.com/202603/29/3WkRxPzB59b5sd9X6Ww4/image.png" 
+            alt="PointUp Logo" 
+            width={400} 
+            height={150} 
+            className="logo-img"
+            priority 
           />
         </div>
 
-        <div className="right-side">
-          <button
-            className="menu-btn"
-            aria-label="menu"
-            onClick={() => setMenuOpen(!menuOpen)}
-            type="button"
+        <div className="right-side" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.nav 
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "auto", opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                className="horizontal-menu-bar"
+              >
+                {menuLinks.map((link, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <Link href={link.href} onClick={() => setMenuOpen(false)}>
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.nav>
+            )}
+          </AnimatePresence>
+
+          <button 
+            className={`menu-btn ${menuOpen ? "active" : ""}`} 
+            onClick={toggleMenu}
+            aria-label="Toggle Menu"
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
           </button>
         </div>
       </header>
 
-      <div className={`side-menu ${menuOpen ? "active" : ""}`} id="sideMenu">
-        <div className="menu-content">
-          <div className="menu-social">
-            <a
-              href="https://instagram.com/pointup.co"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
+      {/* Hero Section مع دعم الفيديو */}
+      <section className="hero-showcase">
+        <div className={`hero-collage-new ${showTiles ? "is-visible" : ""}`}>
+          {columns.map((col, colIdx) => (
+            <motion.div 
+              key={colIdx} 
+              className="hero-column"
+              animate={{
+                y: colIdx % 2 === 0 ? [0, -100, 0] : [-100, 0, -100]
+              }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear"
+              }}
             >
-              Instagram
-            </a>
-            <a
-              href="https://wa.me/+972512812003"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="WhatsApp"
-            >
-              WhatsApp
-            </a>
-          </div>
-
-          <div className="menu-links">
-            <a href="#">Home</a>
-            <a href="#services">Services</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-          </div>
-
-          <a href="#" className="join-btn">
-            Join Our Team
-          </a>
+              {[...col, ...col].map((item, idx) => (
+                <div key={idx} className={`hero-tile-new ${idx % 2 === 0 ? "tall" : "short"}`}>
+                  {item.type === "image" ? (
+                    <Image src={item.src} alt="Work" fill className="tile-media" sizes="15vw" />
+                  ) : (
+                    <video 
+                      src={item.src} 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="tile-media" 
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    />
+                  )}
+                </div>
+              ))}
+            </motion.div>
+          ))}
         </div>
-      </div>
 
-      <div
-        className={`overlay ${menuOpen ? "active" : ""}`}
-        id="overlay"
-        onClick={() => setMenuOpen(false)}
-      />
+        <div className="hero-overlay-dark" />
 
-     <section className="hero-showcase">
-  <div className={`hero-collage ${showTiles ? "is-visible" : ""}`}>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/nx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/px.jpg" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="/images/ux.jpg" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="/images/ix.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/qx.jpg" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="/images/vx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/zx.jpg" alt="" /></div>
+        <div className="hero-center">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            PointUp
+          </motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.8 }}>
+            We build landing pages, visual identities, and smart automation experiences that make your brand feel modern and sharp.
+          </motion.p>
+          <a href="#services" className="hero-cta">Explore Services</a>
+        </div>
+      </section>
 
-    <div className="hero-tile medium"><img className="tile-media" src="/images/dx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/ax.jpg" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="/images/cx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/rx.jpg" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="/images/tx.jpg" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="/images/fx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=1400" alt="" /></div>
-
-    <div className="hero-tile short"><img className="tile-media" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1400" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1400" alt="" /></div>
-
-    <div className="hero-tile medium"><img className="tile-media" src="/images/nx.jpg" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="/images/px.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/ux.jpg" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="/images/ix.jpg" alt="" /></div>
-    <div className="hero-tile short"><img className="tile-media" src="/images/qx.jpg" alt="" /></div>
-    <div className="hero-tile tall"><img className="tile-media" src="/images/vx.jpg" alt="" /></div>
-    <div className="hero-tile medium"><img className="tile-media" src="/images/zx.jpg" alt="" /></div>
-  </div>
-
-  <div className="hero-overlay" />
-
-  <div className={`hero-center ${showTiles ? "is-visible" : ""}`}>
-    <h1>PointUp</h1>
-    <p>Where design, automation, and digital experiences come together.</p>
-    <a href="#services" className="hero-cta">
-      Explore Our Services
-    </a>
-  </div>
-</section>
-
+      {/* Services Section */}
       <section className="services" id="services">
         <div className="container">
           <div className="section-title">
-            <h2>Our Services</h2>
-            <p>Simple, modern, and focused on what your brand needs.</p>
+            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              Our Services
+            </motion.h2>
           </div>
 
           <div className="services-grid">
-            <div className="service-card">
-              <img
-                src="https://plain-eeur-prod-public.komododecks.com/202603/29/sRV5nXIN1WqkKDFORXKD/image.png"
-                alt="Logo Design"
-              />
-              <div className="service-info">
-                <h3>Logo Design</h3>
-                <p>
-                  We create modern, unique logos that represent your brand and
-                  leave a strong first impression across all platforms.
-                </p>
-              </div>
-            </div>
-
-            <div className="service-card">
-              <img
-                src="https://plain-eeur-prod-public.komododecks.com/202603/29/H4OEBpbozA6pW9rBX95x/image.jpg"
-                alt="Social Media Design"
-              />
-              <div className="service-info">
-                <h3>Social Media Design</h3>
-                <p>
-                  Eye-catching posts and ads designed to boost engagement and
-                  attract your ideal audience with a consistent visual identity.
-                </p>
-              </div>
-            </div>
-
-            <div className="service-card">
-              <img
-                src="https://plain-eeur-prod-public.komododecks.com/202603/29/vu4l2vY9TUs5UNyrXhH4/image.png"
-                alt="Landing Pages"
-              />
-              <div className="service-info">
-                <h3>Landing Pages</h3>
-                <p>
-                  We design fast, modern landing pages optimized to turn
-                  visitors into customers with a smooth user experience.
-                </p>
-              </div>
-            </div>
+            {services.map((service, index) => (
+              <motion.div 
+                className={`service-card ${service.isAI ? "ai-featured" : ""}`} 
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15 }}
+                viewport={{ once: true }}
+              >
+                <div className="service-image-wrapper">
+                  <Image src={service.img} alt={service.title} fill className="service-img-main" style={{ objectFit: 'cover' }} />
+                </div>
+                <div className="service-info">
+                  <h3>{service.title}</h3>
+                  <p>{service.desc}</p>
+                  
+                  <Link href={service.link} className="service-get-started">
+                    {service.isAI ? "Try AI Engine" : "Get Started"}
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="before-after-section" id="about">
-        <div className="container">
-          <div className="before-after-top">
-            <div className="before-after-kicker">Selected Transformation</div>
-            <div className="section-title">
-              <h2>Before & After</h2>
-              <p>
-                Drag the slider to reveal the difference between the old version
-                and the upgraded result.
-              </p>
-            </div>
-          </div>
-
-          <div className="compare-wrapper">
-            <div className="compare-frame">
-              <div className="compare-box">
-                <img
-                  src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1600&auto=format&fit=crop"
-                  alt="After"
-                  className="compare-img after-img"
-                />
-
-                <div
-                  className="before-layer"
-                  id="beforeLayer"
-                  style={{ width: `${compareValue}%` }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1600&auto=format&fit=crop"
-                    alt="Before"
-                    className="compare-img before-img"
-                  />
-                </div>
-
-                <div
-                  className="slider-line"
-                  id="sliderLine"
-                  style={{ left: `${compareValue}%` }}
-                >
-                  <div className="slider-button">↔</div>
-                </div>
-
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={compareValue}
-                  className="compare-range"
-                  id="compareRange"
-                  onChange={(e) => setCompareValue(Number(e.target.value))}
-                />
-
-                <div className="compare-label before-label">Before</div>
-                <div className="compare-label after-label">After</div>
-              </div>
-
-              <div className="compare-bottom-info">
-                <div className="compare-info-card">
-                  <strong>Old Version</strong>
-                  <span>
-                    Outdated structure, weaker visual hierarchy, and less
-                    engaging overall presentation.
-                  </span>
-                </div>
-
-                <div className="compare-info-card">
-                  <strong>Upgraded Result</strong>
-                  <span>
-                    Cleaner design, stronger branding, and a more modern
-                    experience built to convert better.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer" id="contact">
+      <footer className="footer">
         <div className="footer-inner">
-          <p className="footer-copy">© 2026 PointUp. All rights reserved.</p>
-
-          <p className="footer-join">
-            Interested in joining <span>PointUp</span>? Let’s build what’s next
-            together.
-          </p>
-
+          <p>© 2026 PointUp. All rights reserved.</p>
           <div className="footer-social">
-            <a
-              href="https://instagram.com/pointup.co"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://wa.me/+972512812003"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="WhatsApp"
-            >
-              WhatsApp
-            </a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">WhatsApp</a>
           </div>
         </div>
       </footer>

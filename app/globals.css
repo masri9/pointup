@@ -1,3 +1,4 @@
+/* 1. الإعدادات العامة */
 * {
   margin: 0;
   padding: 0;
@@ -6,505 +7,276 @@
 
 :root {
   --bg: #050505;
-  --bg2: #0b0b0b;
   --text: #ffffff;
   --muted: #bdbdbd;
-  --border: rgba(255, 255, 255, 0.08);
-  --card: rgba(255, 255, 255, 0.03);
-}
-
-html {
-  scroll-behavior: smooth;
+  --border: rgba(255, 255, 255, 0.05);
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #040404, #090909, #050505);
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
-
-a {
-  color: inherit;
-}
-
-button {
-  font: inherit;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* MENU */
-
-.side-menu {
-  position: fixed;
-  top: 88px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  width: calc(100% - 32px);
-  max-width: 520px;
-  background: rgba(10, 10, 10, 0.96);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 26px;
-  z-index: 2000;
-  padding: 22px 20px 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.28s ease, transform 0.28s ease;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-}
-
-.side-menu.active {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
-}
-
-.menu-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  text-align: center;
-}
-
-.menu-social {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.menu-social a {
-  min-width: 110px;
-  height: 46px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: 0.25s ease;
-  padding: 0 16px;
-}
-
-.menu-social a:hover {
-  transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.menu-links {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.menu-links a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  transition: 0.25s ease;
-}
-
-.menu-links a:hover {
-  opacity: 0.65;
-  transform: translateY(-1px);
-}
-
-.join-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 52px;
-  padding: 14px 18px;
-  border-radius: 16px;
-  text-decoration: none;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 500;
-  background: linear-gradient(135deg, #4d63c9, #6f42c1);
-  box-shadow: 0 10px 30px rgba(90, 100, 255, 0.22);
-  transition: 0.25s ease;
-}
-
-.join-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(90, 100, 255, 0.3);
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: transparent;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 1500;
-}
-
-.overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* HEADER */
-
+/* 2. الهيدر (Topbar) - إزاحة مطلقة لليسار */
 .topbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 20px 34px;
+  
+  /* الشطارة: صفرنا الـ padding من اليسار تماماً */
+  padding: 10px 20px 10px 0px; 
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: none;
 }
 
+/* 3. منطقة الشعار - لزقة على الحافة */
 .left-side {
   display: flex;
   align-items: center;
-}
-
-.logo {
-  height: 85px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.08));
-}
-
-.right-side {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.menu-btn {
-  width: 34px;
-  height: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  z-index: 2100;
-  background: transparent;
-  border: none;
   padding: 0;
+  
+  /* إذا لسه بدك إياه يروح يسار أكثر، جرب هاد الرقم بالسالب */
+  margin-left: -5px; 
 }
 
-.menu-btn span {
-  width: 100%;
-  height: 3px;
-  background: #fff;
-  border-radius: 10px;
-  transition: 0.25s ease;
+.logo-img {
+  /* التكبير الملحوظ */
+  width: 230px !important; 
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  
+  /* رفع السقف عشان يبين ضخم */
+  max-height: 100px !important; 
+  
+  /* إلغاء أي حركات أو تفاعل */
+  transition: none !important;
+  transform: none !important;
 }
 
-.menu-btn:hover span:nth-child(1) {
-  transform: translateX(-3px);
+/* التأكيد على إلغاء أي تأثير عند اللمس */
+.logo-img:hover {
+  transform: none !important;
+  filter: none !important;
 }
 
-.menu-btn:hover span:nth-child(2) {
-  transform: translateX(3px);
-}
-
-.menu-btn:hover span:nth-child(3) {
-  transform: translateX(-2px);
-}
-
-/* HERO */
-/* HERO */
-
-.hero {
+/* 4. الهيرو (Hero Showcase) - الأعمدة السبعة */
+.hero-showcase {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 20px 80px;
-  overflow: hidden;
   background: #000;
 }
 
-.hero-image {
+.hero-collage-new {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.25) 28%,
-    rgba(0, 0, 0, 0.2) 60%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 820px;
-  padding: 20px;
-  animation: fadeUp 1s ease;
-}
-
-.hero-content h1 {
-  font-size: clamp(34px, 6vw, 70px);
-  margin-bottom: 18px;
-  line-height: 1.1;
-}
-
-.hero-content p {
-  font-size: clamp(15px, 2vw, 20px);
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.hero-showcase {
-  position: relative;
-  min-height: 94vh;
-  overflow: hidden;
-  background: #050505;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-
-.hero-collage {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 92px;
-  gap: 10px;
-
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-
-.hero-tile {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  background: #0c0c0c;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
-
+  gap: 12px;
+  padding: 0 10px;
   opacity: 0;
-  transform: translateY(24px) scale(0.97);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+  transition: opacity 1.5s ease;
 }
 
-.hero-collage.is-visible .hero-tile {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+.hero-collage-new.is-visible {
+  opacity: 0.4;
 }
 
-.hero-collage.is-visible .hero-tile:nth-child(1) { transition-delay: 0.03s; }
-.hero-collage.is-visible .hero-tile:nth-child(2) { transition-delay: 0.06s; }
-.hero-collage.is-visible .hero-tile:nth-child(3) { transition-delay: 0.09s; }
-.hero-collage.is-visible .hero-tile:nth-child(4) { transition-delay: 0.12s; }
-.hero-collage.is-visible .hero-tile:nth-child(5) { transition-delay: 0.15s; }
-.hero-collage.is-visible .hero-tile:nth-child(6) { transition-delay: 0.18s; }
-.hero-collage.is-visible .hero-tile:nth-child(7) { transition-delay: 0.21s; }
-.hero-collage.is-visible .hero-tile:nth-child(8) { transition-delay: 0.24s; }
-.hero-collage.is-visible .hero-tile:nth-child(9) { transition-delay: 0.27s; }
-.hero-collage.is-visible .hero-tile:nth-child(10) { transition-delay: 0.30s; }
-.hero-collage.is-visible .hero-tile:nth-child(11) { transition-delay: 0.33s; }
-.hero-collage.is-visible .hero-tile:nth-child(12) { transition-delay: 0.36s; }
-.hero-collage.is-visible .hero-tile:nth-child(13) { transition-delay: 0.39s; }
-.hero-collage.is-visible .hero-tile:nth-child(14) { transition-delay: 0.42s; }
-.hero-collage.is-visible .hero-tile:nth-child(15) { transition-delay: 0.45s; }
-.hero-collage.is-visible .hero-tile:nth-child(16) { transition-delay: 0.48s; }
-.hero-collage.is-visible .hero-tile:nth-child(17) { transition-delay: 0.51s; }
-.hero-collage.is-visible .hero-tile:nth-child(18) { transition-delay: 0.54s; }
-.hero-collage.is-visible .hero-tile:nth-child(19) { transition-delay: 0.57s; }
-.hero-collage.is-visible .hero-tile:nth-child(20) { transition-delay: 0.60s; }
-.hero-collage.is-visible .hero-tile:nth-child(21) { transition-delay: 0.63s; }
-.hero-collage.is-visible .hero-tile:nth-child(22) { transition-delay: 0.66s; }
-.hero-collage.is-visible .hero-tile:nth-child(23) { transition-delay: 0.69s; }
-.hero-collage.is-visible .hero-tile:nth-child(24) { transition-delay: 0.72s; }
-.hero-collage.is-visible .hero-tile:nth-child(25) { transition-delay: 0.75s; }
-.hero-collage.is-visible .hero-tile:nth-child(26) { transition-delay: 0.78s; }
-.hero-collage.is-visible .hero-tile:nth-child(27) { transition-delay: 0.81s; }
-.hero-collage.is-visible .hero-tile:nth-child(28) { transition-delay: 0.84s; }
-
-.hero-tile.short {
-  grid-row: span 2;
+.hero-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.hero-tile.medium {
-  grid-row: span 3;
+.hero-tile-new {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.hero-tile.tall {
-  grid-row: span 4;
-}
+.hero-tile-new.tall { height: 320px; }
+.hero-tile-new.short { height: 200px; }
 
 .tile-media {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  display: block;
-  filter: brightness(0.86) saturate(1.04);
-  transform: scale(1.02);
-  transition:
-    transform 0.45s ease,
-    filter 0.45s ease;
 }
 
-.hero-tile:hover .tile-media {
-  transform: scale(1.05);
-  filter: brightness(0.92) saturate(1.06);
-}
-
-.hero-overlay {
+/* التلاشي السواد العلوي والسفلي (Fading Edges) */
+.hero-overlay-dark {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.68) 0%,
-      rgba(0, 0, 0, 0.18) 10%,
-      rgba(0, 0, 0, 0.02) 22%,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 0) 62%,
-      rgba(0, 0, 0, 0.06) 74%,
-      rgba(0, 0, 0, 0.22) 88%,
-      rgba(0, 0, 0, 0.58) 100%
-    ),
-    radial-gradient(
-      circle at center,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.03) 32%,
-      rgba(0, 0, 0, 0.12) 64%,
-      rgba(0, 0, 0, 0.22) 100%
-    );
+  
+  /* الشطارة: استخدام gradient مركب يمسح الأطراف العلوية والسفلية */
+  background: linear-gradient(
+    to bottom, 
+    #050505 0%,         /* أسود كامل في الأعلى */
+    transparent 25%,    /* يتلاشى تدريجياً لتبدأ الصور بالظهور */
+    transparent 85%,    /* تبقى الصور واضحة في المنتصف */
+    #050505 100%        /* يعود للأسود الكامل في الأسفل */
+  );
+}
+
+/* إضافة لمسة احترافية للأطراف الجانبية أيضاً (اختياري) */
+.hero-showcase::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    to right, 
+    #050505 0%, 
+    transparent 10%, 
+    transparent 90%, 
+    #050505 100%
+  );
+  opacity: 0.8; /* درجة سواد الأطراف الجانبية */
 }
 
 .hero-center {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   text-align: center;
   max-width: 900px;
-  padding: 20px;
-  opacity: 1;
-  transform: translateY(0);
-  transition: transform 0.6s ease;
-}
-
-.hero-center.is-visible {
-  transform: translateY(-6px);
+  padding: 0 20px;
 }
 
 .hero-center h1 {
-  font-size: clamp(72px, 11vw, 150px);
-  line-height: 0.95;
-  font-weight: 700;
+  font-size: clamp(60px, 12vw, 150px);
+  font-weight: 900;
+  letter-spacing: -6px;
+  line-height: 0.9;
+  margin-bottom: 25px;
   color: #fff;
-  letter-spacing: -3px;
-  margin-bottom: 18px;
-  text-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
 }
 
 .hero-center p {
-  max-width: 760px;
-  margin: 0 auto 28px;
-  font-size: clamp(19px, 2vw, 30px);
-  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 35px;
   line-height: 1.5;
 }
 
 .hero-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 58px;
-  padding: 0 30px;
-  border-radius: 999px;
+  display: inline-block;
+  padding: 18px 45px;
+  background: #fff;
+  color: #000;
   text-decoration: none;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  transition: 0.25s ease;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .hero-cta:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(255,255,255,0.15);
 }
 
+/* 6. أزرار القائمة (Menu Button) */
+.menu-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
 
+.menu-btn span {
+  width: 32px;
+  height: 2px;
+  background: #fff;
+  transition: 0.3s;
+}
 
-  .hero-center {
-    max-width: 92%;
-  }
+.menu-btn.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.menu-btn.active span:nth-child(2) { opacity: 0; }
+.menu-btn.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-  .hero-center h1 {
-    font-size: clamp(54px, 15vw, 90px);
-    letter-spacing: -2px;
-  }
+/* شريط الخدمات الأفقي الاحترافي */
+.horizontal-menu-bar {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background: rgba(255, 255, 255, 0.03); /* شفافية كريستالية */
+  backdrop-filter: blur(12px);
+  padding: 10px 30px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-right: 20px; /* مسافة عن زر الـ 3 خطوط */
+  white-space: nowrap;
+}
 
-  .hero-center p {
-    font-size: 18px;
-    margin-bottom: 22px;
-  }
+.horizontal-menu-bar a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s;
+}
 
-  .hero-cta {
-    min-height: 52px;
-    padding: 0 22px;
-    font-size: 15px;
-  }
+.horizontal-menu-bar a:hover {
+  opacity: 1;
+  transform: translateY(-2px); /* حركة خفيفة جداً */
+  color: #fff;
+}
 
-/* SERVICES */
+/* زر المنيو - تعديل بسيط ليناسب الستايل الجديد */
+.menu-btn {
+  background: rgba(255, 255, 255, 0.05);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s;
+}
 
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-btn span {
+  width: 20px; /* أقصر لتكون أرشق */
+  height: 1.5px; /* أنعم */
+  background: #fff;
+}
+
+/* =============================================
+   7. قسم الخدمات المطور (Professional Services)
+   ============================================= */
 .services {
-  padding: 90px 24px 110px;
-  background: linear-gradient(to bottom, #050505, #0a0a0a);
+  padding: 120px 20px;
+  background: #050505;
+  position: relative;
 }
 
 .container {
@@ -514,469 +286,224 @@ button {
 
 .section-title {
   text-align: center;
-  margin-bottom: 45px;
-  animation: fadeUp 0.9s ease;
+  margin-bottom: 80px;
 }
 
 .section-title h2 {
-  font-size: clamp(28px, 4vw, 46px);
-  margin-bottom: 10px;
+  font-size: clamp(40px, 5vw, 60px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-bottom: 15px;
+  background: linear-gradient(to bottom, #fff 40%, #666 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .section-title p {
   color: var(--muted);
-  font-size: 16px;
+  font-size: 18px;
 }
 
+/* شبكة الخدمات - ستايل احترافي */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
 }
 
 .service-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 22px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
 }
 
+/* تأثير الإضاءة عند الـ Hover */
 .service-card:hover {
-  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.service-card img {
+.service-image-wrapper {
+  position: relative;
+  height: 280px;
   width: 100%;
-  height: 260px;
-  object-fit: cover;
+  overflow: hidden;
+}
+
+.service-image-wrapper img {
+  transition: transform 0.7s ease;
+}
+
+.service-card:hover .service-image-wrapper img {
+  transform: scale(1.1) rotate(2deg); /* حركة سينمائية للصورة */
+}
+
+/* طبقة سواد متدرجة فوق صورة الخدمة */
+.service-image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 5, 5, 1) 0%, transparent 50%);
 }
 
 .service-info {
-  padding: 18px 18px 22px;
-  text-align: center;
+  padding: 30px;
+  position: relative;
+  margin-top: -40px; /* لدمج النص مع الصورة بشكل احترافي */
+  z-index: 2;
 }
 
 .service-info h3 {
-  font-size: 20px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #fff;
 }
 
 .service-info p {
-  font-size: 14px;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
-/* BEFORE AFTER */
-
-.before-after-section {
-  position: relative;
-  padding: 120px 24px 130px;
-  background:
-    radial-gradient(circle at top center, rgba(70, 110, 255, 0.1), transparent 30%),
-    linear-gradient(to bottom, #050505, #090909);
-  overflow: hidden;
-}
-
-.before-after-section::before {
-  content: "";
-  position: absolute;
-  top: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(110, 140, 255, 0.1), transparent 65%);
-  pointer-events: none;
-}
-
-.before-after-top {
-  text-align: center;
-  margin-bottom: 26px;
-}
-
-.before-after-kicker {
+/* زر "Explore" صغير لكل خدمة */
+.service-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  margin-bottom: 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 11px;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-}
-
-.compare-wrapper {
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-.compare-frame {
-  position: relative;
-  padding: 18px;
-  border-radius: 32px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.02)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.compare-box {
-  position: relative;
-  width: 100%;
-  height: 620px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #0b0b0b;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.compare-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.before-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  overflow: hidden;
-  z-index: 2;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.before-layer .before-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.slider-line {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0.15)
-  );
-  z-index: 4;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
-}
-
-.slider-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 74px;
-  height: 74px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  gap: 8px;
   color: #fff;
-  font-size: 22px;
-  backdrop-filter: blur(12px);
-  box-shadow:
-    0 0 30px rgba(120, 150, 255, 0.14),
-    0 14px 36px rgba(0, 0, 0, 0.35);
-}
-
-.slider-button::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.compare-range {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: ew-resize;
-  z-index: 6;
-}
-
-.compare-label {
-  position: absolute;
-  top: 22px;
-  z-index: 7;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-size: 11px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.42);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.before-label {
-  left: 22px;
-}
-
-.after-label {
-  right: 22px;
-}
-
-.compare-bottom-info {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 18px;
-  padding: 0 4px;
-  flex-wrap: wrap;
-}
-
-.compare-info-card {
-  flex: 1;
-  min-width: 220px;
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.compare-info-card strong {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 15px;
-  color: #fff;
-}
-
-.compare-info-card span {
-  font-size: 13px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* FOOTER */
-
-.footer {
-  position: relative;
-  width: 100%;
-  padding: 32px 20px;
-  margin-top: 80px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0.01)
-  );
-  overflow: hidden;
-}
-
-.footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 220px;
-  height: 1px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.35),
-    transparent
-  );
-}
-
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.footer-copy {
-  margin: 0;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.3px;
-}
-
-.footer-join {
-  margin: 0;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.78);
-  text-align: center;
-  letter-spacing: 0.2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  transition: 0.3s;
 }
 
-.footer-join span {
-  color: #ffffff;
-  font-weight: 500;
+.service-card:hover .service-link {
+  opacity: 1;
+  gap: 15px; /* يبتعد السهم قليلاً */
 }
 
-.footer-social {
+/* =============================================
+   8. تنسيقات خدمة الـ AI (Nano Banana UI)
+   ============================================= */
+
+/* تمييز كرت الـ AI بلمسة مضيئة */
+.service-card.ai-featured {
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ai-interface {
+  margin-top: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.footer-social a {
-  min-width: 110px;
-  height: 44px;
+/* حقل إدخال النص (Prompt) */
+.ai-prompt-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-  padding: 0 16px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-.footer-social a:hover {
-  transform: translateY(-3px);
+.ai-prompt-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
-/* RESPONSIVE */
-
-@media (max-width: 992px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .compare-box {
-    height: 500px;
-  }
+/* زر التوليد السحري */
+.ai-gen-button {
+  width: 100%;
+  padding: 14px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-@media (max-width: 820px) {
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-social {
-    justify-content: center;
-  }
-
-  .footer-join {
-    max-width: 520px;
-  }
+.ai-gen-button:hover:not(:disabled) {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
+.ai-gen-button:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* تحسين شكل الروابط في المنيو لتفعيل السكرول السلس */
+html {
+  scroll-behavior: smooth;
+}
+
+/* استجابة الموبايل */
 @media (max-width: 768px) {
-  .topbar {
-    padding: 16px 18px;
+  .ai-interface {
+    gap: 8px;
   }
-
-  .logo {
-    height: 54px;
-  }
-
-  .side-menu {
-    top: 80px;
-    width: calc(100% - 20px);
-    border-radius: 22px;
-    padding: 18px 16px 16px;
-  }
-
-  .menu-links a {
-    font-size: 18px;
-  }
-
-  .join-btn {
-    min-height: 50px;
-    font-size: 15px;
-  }
-
-  .hero {
-    min-height: 88vh;
-    padding: 110px 16px 60px;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card img {
-    height: 230px;
-  }
-
-  .before-after-section {
-    padding: 90px 18px 100px;
-  }
-
-  .compare-frame {
+  
+  .ai-prompt-input {
     padding: 12px;
-    border-radius: 22px;
   }
+}
 
-  .compare-box {
-    height: 330px;
-    border-radius: 18px;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .slider-button {
-    width: 58px;
-    height: 58px;
-    font-size: 18px;
-  }
+/* زر Get Started أسفل كل بطاقة */
+.service-get-started {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%; /* ليأخذ عرض البطاقة ويعطي مظهر "إعلان" */
+}
 
-  .compare-label {
-    top: 14px;
-    padding: 8px 12px;
-    font-size: 10px;
-  }
+.service-get-started:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
 
-  .before-label {
-    left: 14px;
-  }
-
-  .after-label {
-    right: 14px;
-  }
-
-  .compare-bottom-info {
-    flex-direction: column;
-  }
+/* تعديل المنيو ليعطي إحساس بالضغط */
+.horizontal-menu-bar a.active-link {
+  color: #fff;
+  border-bottom: 2px solid #fff;
 }
