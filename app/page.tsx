@@ -5,6 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+// ============================================================
+// 1. قسم البيانات (DATA SETTINGS)
+// ============================================================
+
 const heroMedia = [
   { src: "/images/hx.jpg", type: "image" },
   { src: "/videos/promo1.mp4", type: "video" },
@@ -28,13 +32,39 @@ const menuLinks = [
   { name: "Support", href: "#footer" }
 ];
 
-const themes = [
-  { name: "PointUp Purple", primary: "#D8B4FE", secondary: "#A855F7", bg: "#0D0A14", label: "CYBER IDENTITY" },
-  { name: "Oceanic Blue", primary: "#7DD3FC", secondary: "#3B82F6", bg: "#0A0D14", label: "TRUST ENGINE" },
-  { name: "Electric Lime", primary: "#BEF264", secondary: "#84CC16", bg: "#0B140A", label: "GROWTH LAB" }
+const services = [
+  { 
+    name: "Visual Identity", 
+    primary: "#D8B4FE", 
+    bg: "#0D0A14", 
+    label: "BRANDING & LOGOS",
+    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000",
+    desc: "نصمم هويات بصرية تترك أثراً لا ينسى وتعكس قيم شركتك."
+  },
+  { 
+    name: "Web Development", 
+    primary: "#7DD3FC", 
+    bg: "#0A0D14", 
+    label: "NEXT-GEN PLATFORMS",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000",
+    desc: "نبني منصات سريعة، متجاوبة، ومتطورة تقنياً بأحدث التقنيات."
+  },
+  { 
+    name: "Smart Automation", 
+    primary: "#BEF264", 
+    bg: "#0B140A", 
+    label: "WORKFLOW EFFICIENCY",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000",
+    desc: "نؤتمت أعمالك لنوفر لك الوقت والجهد ونزيد الإنتاجية."
+  }
 ];
 
 export default function HomePage() {
+  
+  // ============================================================
+  // 2. منطق الصفحة (LOGIC & STATE)
+  // ============================================================
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const [showTiles, setShowTiles] = useState(false);
   const [activeTheme, setActiveTheme] = useState(0);
@@ -42,7 +72,7 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => setShowTiles(true), 100);
     const interval = setInterval(() => {
-      setActiveTheme((prev) => (prev + 1) % themes.length);
+      setActiveTheme((prev) => (prev + 1) % services.length);
     }, 5000);
     return () => { clearTimeout(timer); clearInterval(interval); };
   }, []);
@@ -53,10 +83,12 @@ export default function HomePage() {
 
   return (
     <>
+      {/* 3. الهيدر (HEADER / TOPBAR) */}
       <header className="topbar">
         <div className="left-side">
           <Image src="https://plain-eeur-prod-public.komododecks.com/202603/29/3WkRxPzB59b5sd9X6Ww4/image.png" alt="Logo" width={120} height={45} className="logo-img-fixed" priority />
         </div>
+        
         <div className="right-side" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <AnimatePresence>
             {menuOpen && (
@@ -67,12 +99,14 @@ export default function HomePage() {
               </motion.nav>
             )}
           </AnimatePresence>
+          
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
             <span></span><span></span>
           </button>
         </div>
       </header>
 
+      {/* 4. قسم الهيرو (HERO SECTION) */}
       <section className="hero-showcase">
         <div className={`hero-collage-new ${showTiles ? "is-visible" : ""}`}>
           {columns.map((col, colIdx) => (
@@ -94,7 +128,9 @@ export default function HomePage() {
             </motion.div>
           ))}
         </div>
+
         <div className="hero-overlay-dark" />
+
         <div className="hero-center">
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>PointUp</motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Visual Identity • Smart Automation • Creative Design</motion.p>
@@ -102,46 +138,141 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* القسم الثاني: مختبر الهوية (بدون خط الليزر) */}
+      {/* 5. قسم الخدمات الذكي (DYNAMIC SERVICES LAB) */}
       <motion.section 
-        className="design-system-section" 
-        animate={{ backgroundColor: themes[activeTheme].bg }}
+        className="services-lab-section" 
+        animate={{ backgroundColor: services[activeTheme].bg }}
         transition={{ duration: 1, ease: "easeInOut" }}
+        style={{ padding: '150px 20px', position: 'relative', overflow: 'hidden' }}
       >
-        <div className="container">
-          <div className="section-title">
-            <span className="badge" style={{ color: themes[activeTheme].primary }}>DIGITAL IDENTITY LAB</span>
-            <h2>Engineered <span style={{ color: themes[activeTheme].primary }}>Consistency</span></h2>
-          </div>
-          
-          <div className="brand-scanner-canvas" style={{ borderColor: themes[activeTheme].primary + '22' }}>
-            <motion.h3 
-              key={activeTheme}
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }}
-              style={{ color: themes[activeTheme].primary, fontSize: '32px' }}
-            >
-              {themes[activeTheme].name}
-            </motion.h3>
+        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="services-display-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '80px', alignItems: 'center' }}>
             
-            <div className="identity-cards-row">
-              <motion.div className="brand-card-3d" whileHover={{ rotateY: 20, rotateX: 10 }} style={{ background: themes[activeTheme].primary }}>
-                <div className="card-content-custom">
-                  <span className="card-logo-p">P.</span>
-                  <div className="card-tag-info" style={{ color: '#000' }}>SYSTEM CORE <br /> BRAND ASSETS 2026</div>
-                </div>
-              </motion.div>
-              <motion.div className="brand-card-3d" whileHover={{ rotateY: -20, rotateX: 10 }} style={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div className="card-content-custom">
-                  <div style={{ height: '50px', background: themes[activeTheme].primary, opacity: 0.2, borderRadius: '8px' }} />
-                  <div className="card-tag-info">UI FRAMEWORK <br /> CONSISTENCY</div>
-                </div>
-              </motion.div>
+            <div className="service-content-side">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTheme}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="badge" style={{ 
+                    color: services[activeTheme].primary, 
+                    border: `1px solid ${services[activeTheme].primary}33`,
+                    padding: '8px 20px', borderRadius: '100px', fontSize: '12px', letterSpacing: '2px'
+                  }}>
+                    OUR EXPERTISE
+                  </span>
+                  
+                  <h3 style={{ 
+                    color: services[activeTheme].primary, 
+                    fontSize: '56px', fontWeight: '900', marginTop: '20px', lineHeight: '1' 
+                  }}>
+                    {services[activeTheme].name}
+                  </h3>
+                  
+                  <p className="service-label" style={{ 
+                    letterSpacing: '4px', color: '#666', marginTop: '10px', textTransform: 'uppercase', fontSize: '13px' 
+                  }}>
+                    {services[activeTheme].label}
+                  </p>
+                  
+                  <p className="service-description" style={{ 
+                    color: 'rgba(255,255,255,0.5)', marginTop: '25px', fontSize: '18px', lineHeight: '1.6', maxWidth: '450px' 
+                  }}>
+                    {services[activeTheme].desc}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="theme-switcher-mini" style={{ display: 'flex', gap: '15px', marginTop: '40px' }}>
+                {services.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className="nav-dot-service" 
+                    style={{ 
+                      width: activeTheme === i ? '60px' : '30px',
+                      height: '4px', borderRadius: '2px', cursor: 'pointer',
+                      backgroundColor: activeTheme === i ? services[i].primary : '#333',
+                      transition: '0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                    onClick={() => setActiveTheme(i)}
+                  />
+                ))}
+              </div>
             </div>
-            <motion.button className="scanner-btn" animate={{ background: themes[activeTheme].primary, boxShadow: `0 15px 40px ${themes[activeTheme].primary}44` }}>Analyze Brand</motion.button>
+
+            <div className="service-image-side">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTheme}
+                  className="image-frame"
+                  initial={{ opacity: 0, scale: 0.9, rotateY: -5 }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                  exit={{ opacity: 0, scale: 1.1, rotateY: 5 }}
+                  transition={{ duration: 0.7 }}
+                  style={{ 
+                    position: 'relative', height: '550px', borderRadius: '40px', overflow: 'hidden',
+                    border: `1px solid rgba(255,255,255,0.05)`,
+                    boxShadow: `0 40px 100px rgba(0,0,0,0.5)`
+                  }}
+                >
+                  <Image 
+                    src={services[activeTheme].image} 
+                    alt={services[activeTheme].name} 
+                    fill 
+                    style={{ objectFit: 'cover' }} 
+                  />
+                  <div style={{ 
+                    position: 'absolute', inset: 0, 
+                    background: `linear-gradient(to top, ${services[activeTheme].bg}, transparent 70%)` 
+                  }} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </motion.section>
+
+      {/* ============================================================
+          6. قسم معرض الأعمال (PORTFOLIO GRID)
+          عرض المشاريع المختارة بتصميم شبكي فخم
+          ============================================================
+      */}
+      <section className="portfolio-section" style={{ padding: '150px 20px', background: '#050505' }}>
+        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ marginBottom: '80px' }}>
+            <span className="badge" style={{ color: services[activeTheme].primary, border: `1px solid ${services[activeTheme].primary}33`, padding: '8px 20px', borderRadius: '100px', fontSize: '11px', letterSpacing: '2px' }}>
+              SELECTED WORKS
+            </span>
+            <h2 style={{ fontSize: '48px', fontWeight: '900', marginTop: '15px' }}>
+              Featured <span style={{ color: services[activeTheme].primary }}>Projects</span>
+            </h2>
+          </div>
+          
+          <div className="portfolio-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '30px' }}>
+            {services.map((project, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -15 }}
+                className="portfolio-card"
+                style={{ position: 'relative', height: '500px', borderRadius: '30px', overflow: 'hidden', background: '#111', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer' }}
+              >
+                <Image src={project.image} alt={project.name} fill style={{ objectFit: 'cover', opacity: 0.6 }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px', background: 'linear-gradient(to top, #050505, transparent)' }}>
+                  <h4 style={{ fontSize: '24px', fontWeight: '800' }}>{project.name}</h4>
+                  <p style={{ fontSize: '12px', color: '#666', letterSpacing: '2px', textTransform: 'uppercase', marginTop: '5px' }}>{project.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer id="footer" style={{ padding: '100px', textAlign: 'center', color: '#222', fontWeight: '600', fontSize: '13px' }}>
+        <p>© 2026 PointUp Studio. All rights reserved.</p>
+      </footer>
     </>
   );
 }
